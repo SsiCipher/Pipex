@@ -7,9 +7,22 @@ void	print_error(char *str)
 	exit(1);
 }
 
+char	*get_cmd_path(char *cmd_name, char **envp)
+{
+	// Find line that contains "PATH:" in envp
+	// Split that line with ':' starting from i=5
+	// Try every for every path:
+		// join path with '/'
+		// join path with cmd
+		// use access function with the new_path
+	// return the right path to cmd
+}
+
 void	execude_cmd(char *cmd, char **envp)
 {
-
+	// split command by ' '
+	// get_cmd_path with cmd_split[0] & envp
+	// execve the cmd
 }
 
 void	cmd1_handler(int *pipe_ends, char *infile_name, char cmd, char **envp)
@@ -29,7 +42,7 @@ void	cmd1_handler(int *pipe_ends, char *infile_name, char cmd, char **envp)
 void	cmd2_handler(int *pipe_ends, char *outfile_name, char cmd, char **envp)
 {
 	int		outfile_fd;
-	outfile_fd = open(argv[4], O_RDWR | O_CREAT);
+	outfile_fd = open(outfile_name, O_RDWR | O_CREAT);
 	if (outfile_fd == -1)
 		print_error("Can't open outfile\n");
 
