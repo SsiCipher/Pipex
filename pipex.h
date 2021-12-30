@@ -5,10 +5,15 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
-// # include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <string.h>
+# include "./libft/libft.h"
 
-char	**ft_split(char *str, char sep);
-char	*strstr(char *haystack, char *needle);
+// utils.c
+void	print_error(char *str);
+char	**get_env_paths(char **envp);
+char	*get_cmd_path(char *cmd_name, char **envp);
+void	execute_cmd(char *cmd, char **envp);
 
 #endif
