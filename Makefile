@@ -21,4 +21,7 @@ fclean:
 
 re: fclean all
 
+bonus:
+	$(COMP) $(FLAGS) utils.c pipex_bonus.c libft/libft.a -o $(NAME)
+
 .PHONY: libft
