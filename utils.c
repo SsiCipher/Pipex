@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/05 02:01:33 by yanab             #+#    #+#             */
+/*   Updated: 2022/01/05 17:50:42 by yanab            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	print_error(char *str)
@@ -60,5 +72,5 @@ void	execute_cmd(char *cmd, char **envp)
 	split_cmd = ft_split(cmd, ' ');
 	cmd_exec = execve(get_cmd_path(split_cmd[0], envp), split_cmd, envp);
 	if (cmd_exec == -1)
-		print_error("Error: execve failed\n");
+		print_error("Error: Command not found\n");
 }
