@@ -2,25 +2,29 @@ COMP	= cc
 NAME	= pipex
 FLAGS	= -Wall -Wextra -Werror
 
-SRCS	= utils.c libft/libft.a
+SRCS	= src/utils.c src/utils_bonus.c libft/libft.a libgnl/libgnl.a
+INCS	= -I includes
 
 all: libft $(NAME)
 
 libft:
 	@make -C libft
 
-$(NAME): pipex.c
-	$(COMP) $(FLAGS) $(SRCS) pipex.c -o $(NAME)
+libgnl:
+	@make -C libgnl
+
+$(NAME):
+	$(COMP) $(FLAGS) $(SRCS) $(INCS) pipex.c -o $(NAME)
 
 clean:
 	rm -rf $(NAME)
 
-fclean:
+fclean: clean
 	@make -C libft fclean
 
 re: fclean all
 
-bonus: pipex_bonus.c
-	$(COMP) $(FLAGS) $(SRCS) pipex_bonus.c -o $(NAME)
+bonus:
+	$(COMP) $(FLAGS) $(SRCS) $(INCS) pipex_bonus.c -o $(NAME)
 
-.PHONY: libft
+.PHONY: libft libgnl

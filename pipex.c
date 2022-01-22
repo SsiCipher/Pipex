@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 02:02:07 by yanab             #+#    #+#             */
-/*   Updated: 2022/01/07 17:28:32 by yanab            ###   ########.fr       */
+/*   Created: 2022/01/05 02:02:07 by cipher            #+#    #+#             */
+/*   Updated: 2022/01/21 19:26:22 by cipher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	cmd1_handler(int *pipe_ends, char *infile_name, char *cmd, char **envp)
 	infile_fd = open(infile_name, O_RDONLY);
 	if (infile_fd == -1)
 		print_error("Error: Failed to open infile\n");
-	close(pipe_ends[0]);
+	close(pipe_ends[READ_END]);
 	dup2(infile_fd, STDIN_FILENO);
-	dup2(pipe_ends[1], STDOUT_FILENO);
+	dup2(pipe_ends[WRITE_END], STDOUT_FILENO);
+	close(pipe_ends[WRITE_END]);
 	execute_cmd(cmd, envp);
 }
 
@@ -32,8 +33,9 @@ void	cmd2_handler(int *pipe_ends, char *outfile_name, char *cmd, char **envp)
 	outfile_fd = open(outfile_name, O_RDWR | O_CREAT | O_TRUNC, 00666);
 	if (outfile_fd == -1)
 		print_error("Error: Failed to open outfile\n");
-	close(pipe_ends[1]);
-	dup2(pipe_ends[0], STDIN_FILENO);
+	close(pipe_ends[WRITE_END]);
+	dup2(pipe_ends[READ_END], STDIN_FILENO);
+	close(pipe_ends[READ_END]);
 	dup2(outfile_fd, STDOUT_FILENO);
 	execute_cmd(cmd, envp);
 }
@@ -59,17 +61,17 @@ int	main(int argc, char **argv, char **envp)
 	pipe(pipe_ends);
 	cmd1_proc_pid = fork();
 	if (cmd1_proc_pid == -1)
-		print_error("Error: Failes to create a child process for CMD_1\n");
+		print_error("Error: Failed to create a child process for CMD_1\n");
 	else if (cmd1_proc_pid == 0)
 		cmd1_handler(pipe_ends, argv[1], argv[2], envp);
 	else
 		handle_exit(cmd1_proc_pid);
 	cmd2_proc_pid = fork();
 	if (cmd2_proc_pid == -1)
-		print_error("Error: Failes to create a child process for CMD_2\n");
+		print_error("Error: Failed to create a child process for CMD_2\n");
 	else if (cmd2_proc_pid == 0)
 		cmd2_handler(pipe_ends, argv[4], argv[3], envp);
-	close(pipe_ends[0]);
-	close(pipe_ends[1]);
+	close(pipe_ends[READ_END]);
+	close(pipe_ends[WRITE_END]);
 	return (0);
 }

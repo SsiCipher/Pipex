@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:13:23 by yanab             #+#    #+#             */
-/*   Updated: 2021/11/27 01:05:16 by yanab            ###   ########.fr       */
+/*   Updated: 2022/01/21 19:01:27 by cipher           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ static int	ft_count_parts(char const *str, char sep)
 		return (0);
 	while (str[i])
 	{
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			i++;
+			while (str[i] && str[i] != '\'' && str[i] != '"')
+				i++;
+		}
 		if (str[i] == sep && str[i + 1] != sep && str[i + 1] != '\0')
 			count++;
 		i++;
@@ -51,6 +57,12 @@ static char	*ft_nth_part(char const *str, char sep, int n)
 	{
 		if (count == n)
 			return (&((char *)str)[i]);
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			i++;
+			while (str[i] && str[i] != '\'' && str[i] != '"')
+				i++;
+		}
 		if (str[i] == sep && str[i + 1] != sep && str[i + 1] != '\0')
 			count++;
 		i++;
@@ -64,7 +76,15 @@ static int	ft_partlen(char *part_start, char sep)
 
 	len = 0;
 	while (part_start[len] && part_start[len] != sep)
+	{
+		if (part_start[len] == '\'' || part_start[len] == '"')
+		{
+			len++;
+			while (part_start[len] && part_start[len] != '\'' && part_start[len] != '"')
+				len++;
+		}
 		len++;
+	}
 	return (len);
 }
 
