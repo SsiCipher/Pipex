@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:52:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/01/22 02:07:23 by cipher           ###   ########.fr       */
+/*   Updated: 2022/01/31 13:04:02 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include "../libft/libft.h"
 # include "../libgnl/get_next_line.h"
 
-#define READ_END 0
-#define WRITE_END 1
+# define READ_END 0
+# define WRITE_END 1
 
 typedef struct s_hd_args
 {
@@ -42,7 +42,7 @@ typedef struct s_mp_args
 	char	**envp;
 	char	*infile_name;
 	char	*outfile_name;
-}	s_mp_args;
+}	t_mp_args;
 
 // utils.c
 void	print_error(char *str);
@@ -53,5 +53,8 @@ void	execute_cmd(char *cmd, char **envp);
 // utils_bonus.c
 void	start_here_doc(char *limiter);
 void	exec_here_doc(char *cmd1, char *cmd2, char *outfile_name, char **envp);
+void	execute_start_cmds(int cmd_i, int *pipe_ends, char **argv, char **envp);
+void	run_cmd_in_proc(int cmd_i, int *pipe_ends, char **argv, char **envp);
+void	execute_last_cmd(char *outfile_name, char *cmd, char **envp);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 02:02:07 by cipher            #+#    #+#             */
-/*   Updated: 2022/01/21 19:26:22 by cipher           ###   ########.fr       */
+/*   Updated: 2022/01/31 12:01:43 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	main(int argc, char **argv, char **envp)
 		print_error("Error: Failed to create a child process for CMD_1\n");
 	else if (cmd1_proc_pid == 0)
 		cmd1_handler(pipe_ends, argv[1], argv[2], envp);
-	else
-		handle_exit(cmd1_proc_pid);
 	cmd2_proc_pid = fork();
 	if (cmd2_proc_pid == -1)
 		print_error("Error: Failed to create a child process for CMD_2\n");

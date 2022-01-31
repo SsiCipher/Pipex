@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cipher <cipher@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 14:13:23 by yanab             #+#    #+#             */
-/*   Updated: 2022/01/21 19:01:27 by cipher           ###   ########.fr       */
+/*   Updated: 2022/01/31 13:01:44 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ static char	*ft_nth_part(char const *str, char sep, int n)
 
 	i = 0;
 	count = 1;
-	if (*str == '\0')
-		return (&((char *)str)[0]);
-	while (str[i] == sep)
+	while (str[i] && str[i] == sep)
 		i++;
-	if (str[i] == '\0')
+	if (str[0] == '\0' || str[i] == '\0')
 		return (&((char *)str)[0]);
 	while (str[i])
 	{
@@ -80,7 +78,10 @@ static int	ft_partlen(char *part_start, char sep)
 		if (part_start[len] == '\'' || part_start[len] == '"')
 		{
 			len++;
-			while (part_start[len] && part_start[len] != '\'' && part_start[len] != '"')
+			while (part_start[len]
+				&& part_start[len] != '\''
+				&& part_start[len] != '"'
+			)
 				len++;
 		}
 		len++;

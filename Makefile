@@ -5,7 +5,7 @@ FLAGS	= -Wall -Wextra -Werror
 SRCS	= src/utils.c src/utils_bonus.c libft/libft.a libgnl/libgnl.a
 INCS	= -I includes
 
-all: libft $(NAME)
+all: libft libgnl $(NAME)
 
 libft:
 	@make -C libft
@@ -21,10 +21,11 @@ clean:
 
 fclean: clean
 	@make -C libft fclean
+	@make -C libgnl fclean
 
 re: fclean all
 
-bonus:
+bonus: libft libgnl
 	$(COMP) $(FLAGS) $(SRCS) $(INCS) pipex_bonus.c -o $(NAME)
 
 .PHONY: libft libgnl
