@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:52:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/01/31 13:04:02 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/03 02:06:16 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include <string.h>
 # include "../libft/libft.h"
 # include "../libgnl/get_next_line.h"
@@ -45,7 +46,8 @@ typedef struct s_mp_args
 }	t_mp_args;
 
 // utils.c
-void	print_error(char *str);
+void	print_error(char *error_msg, char *arg);
+void	print_sys_error(char *arg);
 char	**get_env_paths(char **envp);
 char	*get_cmd_path(char *cmd_name, char **envp);
 void	execute_cmd(char *cmd, char **envp);

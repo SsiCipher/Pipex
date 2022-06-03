@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 02:01:26 by cipher            #+#    #+#             */
-/*   Updated: 2022/01/31 13:54:46 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/03 03:44:38 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ void	start_here_doc(char *limiter)
 	char	*line;
 	int		limiter_len;
 
-
 	limiter_len = ft_strlen(limiter);
 	pipe(pipe_ends);
 	proc_pid = fork();
 	if (proc_pid == -1)
-		print_error("Error: Fork failed");
+		print_error("Error: Fork failed", NULL);
 	else if (proc_pid == 0)
 	{
 		close(pipe_ends[READ_END]);
@@ -34,7 +33,7 @@ void	start_here_doc(char *limiter)
 		printf("%s\n", line);
 		while (line)
 		{
-			if (!ft_strncmp(line, limiter, ft_strlen(limiter)))	
+			if (!ft_strncmp(line, limiter, ft_strlen(limiter)))
 				exit(EXIT_SUCCESS);
 			write(pipe_ends[WRITE_END], line, ft_strlen(line));
 			line = get_next_line(STDIN_FILENO);
@@ -57,7 +56,7 @@ void	exec_here_doc(char *cmd1, char *cmd2, char *outfile_name, char **envp)
 	pipe(pipe_ends);
 	proc_pid = fork();
 	if (proc_pid == -1)
-		print_error("Error: Fork failed");
+		print_error("Error: Fork failed", NULL);
 	else if (proc_pid == 0)
 	{
 		close(pipe_ends[READ_END]);
@@ -68,7 +67,7 @@ void	exec_here_doc(char *cmd1, char *cmd2, char *outfile_name, char **envp)
 	{
 		outfile_fd = open(outfile_name, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		if (outfile_fd == -1)
-			print_error("Error: Coudn't create outfile");
+			print_error("Error: Coudn't create outfile", NULL);
 		close(pipe_ends[WRITE_END]);
 		dup2(pipe_ends[READ_END], STDIN_FILENO);
 		dup2(outfile_fd, STDOUT_FILENO);
@@ -84,7 +83,7 @@ void	execute_start_cmds(int cmd_i, int *pipe_ends, char **argv, char **envp)
 	{
 		infile_fd = open(argv[1], O_RDONLY);
 		if (infile_fd == -1)
-			print_error("Error: Failed to open infile\n");
+			print_error("Error: Failed to open infile\n", NULL);
 		dup2(infile_fd, STDIN_FILENO);
 		close(infile_fd);
 	}
@@ -100,7 +99,7 @@ void	run_cmd_in_proc(int cmd_i, int *pipe_ends, char **argv, char **envp)
 
 	cmd_proc_pid = fork();
 	if (cmd_proc_pid == -1)
-		print_error("Error: The fork function failed\n");
+		print_error("Error: The fork function failed\n", NULL);
 	else if (cmd_proc_pid == 0)
 		execute_start_cmds(cmd_i, pipe_ends, argv, envp);
 	else
@@ -118,7 +117,7 @@ void	execute_last_cmd(char *outfile_name, char *cmd, char **envp)
 
 	outfile_fd = open(outfile_name, O_RDWR | O_CREAT | O_TRUNC, 00666);
 	if (outfile_fd == -1)
-		print_error("Error: Failed to open outfile\n");
+		print_error("Error: Failed to open outfile\n", NULL);
 	dup2(outfile_fd, 1);
 	close(outfile_fd);
 	execute_cmd(cmd, envp);
