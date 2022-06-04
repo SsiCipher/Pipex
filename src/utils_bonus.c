@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 02:01:26 by cipher            #+#    #+#             */
-/*   Updated: 2022/06/03 03:44:38 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/04 19:25:08 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	start_here_doc(char *limiter)
 	char	*line;
 	int		limiter_len;
 
-	limiter_len = ft_strlen(limiter);
 	pipe(pipe_ends);
+	limiter_len = ft_strlen(limiter);
 	proc_pid = fork();
 	if (proc_pid == -1)
 		print_error("Error: Fork failed", NULL);
@@ -30,7 +30,6 @@ void	start_here_doc(char *limiter)
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			exit(EXIT_SUCCESS);
-		printf("%s\n", line);
 		while (line)
 		{
 			if (!ft_strncmp(line, limiter, ft_strlen(limiter)))
@@ -75,7 +74,7 @@ void	exec_here_doc(char *cmd1, char *cmd2, char *outfile_name, char **envp)
 	}
 }
 
-void	execute_start_cmds(int cmd_i, int *pipe_ends, char **argv, char **envp)
+void	exec_start_cmds(int cmd_i, int *pipe_ends, char **argv, char **envp)
 {
 	int	infile_fd;
 
@@ -93,7 +92,7 @@ void	execute_start_cmds(int cmd_i, int *pipe_ends, char **argv, char **envp)
 	execute_cmd(argv[cmd_i + 2], envp);
 }
 
-void	run_cmd_in_proc(int cmd_i, int *pipe_ends, char **argv, char **envp)
+void	exec_cmd_in_proc(int cmd_i, int *pipe_ends, char **argv, char **envp)
 {
 	pid_t	cmd_proc_pid;
 
@@ -101,7 +100,7 @@ void	run_cmd_in_proc(int cmd_i, int *pipe_ends, char **argv, char **envp)
 	if (cmd_proc_pid == -1)
 		print_error("Error: The fork function failed\n", NULL);
 	else if (cmd_proc_pid == 0)
-		execute_start_cmds(cmd_i, pipe_ends, argv, envp);
+		exec_start_cmds(cmd_i, pipe_ends, argv, envp);
 	else
 	{
 		close(pipe_ends[WRITE_END]);
@@ -111,7 +110,7 @@ void	run_cmd_in_proc(int cmd_i, int *pipe_ends, char **argv, char **envp)
 	}
 }
 
-void	execute_last_cmd(char *outfile_name, char *cmd, char **envp)
+void	exec_last_cmd(char *outfile_name, char *cmd, char **envp)
 {
 	int	outfile_fd;
 

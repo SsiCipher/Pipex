@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:52:08 by yanab             #+#    #+#             */
-/*   Updated: 2022/06/03 02:06:16 by yanab            ###   ########.fr       */
+/*   Updated: 2022/06/04 19:23:08 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	execute_cmd(char *cmd, char **envp);
 // utils_bonus.c
 void	start_here_doc(char *limiter);
 void	exec_here_doc(char *cmd1, char *cmd2, char *outfile_name, char **envp);
-void	execute_start_cmds(int cmd_i, int *pipe_ends, char **argv, char **envp);
-void	run_cmd_in_proc(int cmd_i, int *pipe_ends, char **argv, char **envp);
-void	execute_last_cmd(char *outfile_name, char *cmd, char **envp);
+void	exec_start_cmds(int cmd_i, int *pipe_ends, char **argv, char **envp);
+void	exec_cmd_in_proc(int cmd_i, int *pipe_ends, char **argv, char **envp);
+void	exec_last_cmd(char *outfile_name, char *cmd, char **envp);
 
 #endif

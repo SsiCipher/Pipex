@@ -26,6 +26,6 @@ fclean: clean
 re: fclean all
 
 bonus: libft libgnl
-	$(COMP) $(FLAGS) $(SRCS_BONUS) $(INCS) pipex_bonus.redo.c -o $(NAME)
+	$(COMP) $(FLAGS) $(SRCS_BONUS) $(INCS) pipex_bonus.c -o $(NAME)
 
 .PHONY: libft libgnl
