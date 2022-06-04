@@ -2,7 +2,7 @@ COMP		= cc
 NAME		= pipex
 FLAGS		= -Wall -Wextra -Werror
 SRCS		= src/utils.c libft/libft.a
-SRCS_BONUS	= src/utils.c src/utils_bonus.c libft/libft.a libgnl/libgnl.a
+SRCS_BONUS	= src/utils.c src/utils_bonus.c src/utils_heredoc_bonus.c libft/libft.a libgnl/libgnl.a
 INCS		= -I includes
 
 all: libft libgnl $(NAME)
